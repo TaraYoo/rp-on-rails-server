@@ -24,16 +24,4 @@ RSpec.describe 'routes for users' do
       action: 'changepw'
     )
   end
-
-  it 'routes GET /users to the users#index action' do
-    expect(get('/users')).to route_to('users#index')
-  end
-
-  it 'routes GET /users/:id to the users#show action' do
-    expect(get('/users/1')).to route_to(
-      controller: 'users',
-      action: 'show',
-      id: '1'
-    )
-  end
 end

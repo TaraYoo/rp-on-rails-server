@@ -80,29 +80,6 @@ RSpec.describe UsersController do
       end
     end
 
-    describe 'PATCH update' do
-      def user_email_params
-        {
-          email: 'foobarbaz@f'
-        }
-      end
-
-      before(:each) do
-        patch :update,
-              params: { id: @user_id, user: user_email_params },
-              format: :json
-      end
-
-      it 'is successful' do
-        expect(response).to be_successful
-      end
-
-      it 'renders @user' do
-        parsed_response = JSON.parse(response.body)
-        expect(parsed_response['user']['email']).to eql(user_email_params[:email])
-      end
-    end
-
     describe 'DELETE signout' do
       before(:each) do
         delete :signout, params: { id: @user_id }, format: :json
@@ -114,36 +91,6 @@ RSpec.describe UsersController do
 
       it 'renders no response body' do
         expect(response.body).to be_empty
-      end
-    end
-
-    describe 'GET index' do
-      before(:each) do
-        get :index, format: :json
-      end
-
-      it 'is successful' do
-        expect(response).to be_successful
-      end
-
-      it 'renders a JSON response' do
-        parsed_response = JSON.parse(response.body)
-        expect(parsed_response).not_to be_nil
-      end
-    end
-
-    describe 'GET show' do
-      before(:each) do
-        get :index, params: { id: @user_id }, format: :json
-      end
-
-      it 'is successful' do
-        expect(response).to be_successful
-      end
-
-      it 'renders a JSON response' do
-        parsed_response = JSON.parse(response.body)
-        expect(parsed_response).not_to be_nil
       end
     end
   end
