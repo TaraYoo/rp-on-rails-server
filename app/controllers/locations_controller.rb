@@ -5,7 +5,7 @@ class LocationsController < ProtectedController
 
   # GET /locations
   def index
-    @locations = Location.all
+    @locations = current_user.locations
 
     render json: @locations
   end
@@ -17,7 +17,7 @@ class LocationsController < ProtectedController
 
   # POST /locations
   def create
-    @location = Location.new(location_params)
+    @location = current_user.locations.build(location_params)
 
     if @location.save
       render json: @location, status: :created, location: @location
@@ -38,13 +38,15 @@ class LocationsController < ProtectedController
   # DELETE /locations/1
   def destroy
     @location.destroy
+
+    head :no_content
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_location
-    @location = Location.find(params[:id])
+    @location = current_user.locations.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
