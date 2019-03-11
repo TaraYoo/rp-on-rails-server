@@ -1,5 +1,7 @@
-class LocationsController < ApplicationController
-  before_action :set_location, only: [:show, :update, :destroy]
+# frozen_string_literal: true
+
+class LocationsController < ProtectedController
+  before_action :set_location, only: %i[show update destroy]
 
   # GET /locations
   def index
@@ -39,13 +41,15 @@ class LocationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_location
-      @location = Location.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def location_params
-      params.require(:location).permit(:name, :plot, :visited, :outcome, :has_players)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_location
+    @location = Location.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def location_params
+    params.require(:location).permit(:name, :plot, :visited, :outcome,
+                                     :has_players)
+  end
 end
