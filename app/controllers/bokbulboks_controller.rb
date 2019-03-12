@@ -1,9 +1,11 @@
-class BokbulboksController < ApplicationController
-  before_action :set_bokbulbok, only: [:show, :update, :destroy]
+# frozen_string_literal: true
+
+class BokbulboksController < ProtectedController
+  before_action :set_bokbulbok, only: %i[show update destroy]
 
   # GET /bokbulboks
   def index
-    @bokbulboks = Bokbulbok.all
+    @bokbulboks = current_user.bokbulboks
 
     render json: @bokbulboks
   end
@@ -15,7 +17,7 @@ class BokbulboksController < ApplicationController
 
   # POST /bokbulboks
   def create
-    @bokbulbok = Bokbulbok.new(bokbulbok_params)
+    @bokbulbok = current_user.bokbulboks.build(bokbulbok_params)
 
     if @bokbulbok.save
       render json: @bokbulbok, status: :created, location: @bokbulbok
@@ -36,16 +38,18 @@ class BokbulboksController < ApplicationController
   # DELETE /bokbulboks/1
   def destroy
     @bokbulbok.destroy
+
+    head :no_content
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bokbulbok
-      @bokbulbok = Bokbulbok.find(params[:id])
+      @bokbulbok = current_user.bokbulboks.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def bokbulbok_params
-      params.require(:bokbulbok).permit(:description)
+      params.require(:bokbulbok).permit(:description, :used)
     end
 end

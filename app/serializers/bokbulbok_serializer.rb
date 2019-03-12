@@ -1,3 +1,3 @@
 class BokbulbokSerializer < ActiveModel::Serializer
-  attributes :id, :description
+  attributes :id, :description, :used
 end
