@@ -10,25 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_11_154251) do
+ActiveRecord::Schema.define(version: 2019_03_12_205744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "examples", force: :cascade do |t|
-    t.text "text", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_examples_on_user_id"
-  end
-
   create_table "locations", force: :cascade do |t|
     t.string "name", null: false
     t.text "plot"
-    t.boolean "visited", default: false
+    t.string "visited", default: "false"
     t.text "outcome"
-    t.boolean "has_players", default: false
+    t.string "has_players", default: "false"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
@@ -46,6 +38,5 @@ ActiveRecord::Schema.define(version: 2019_03_11_154251) do
     t.index ["token"], name: "index_users_on_token", unique: true
   end
 
-  add_foreign_key "examples", "users"
   add_foreign_key "locations", "users"
 end
