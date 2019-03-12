@@ -1,0 +1,2 @@
+class Bokbulbok < ApplicationRecord
+end
