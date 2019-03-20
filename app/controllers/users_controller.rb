@@ -46,6 +46,13 @@ class UsersController < ProtectedController
     end
   end
 
+  def demosignout
+    current_user.locations.destroy_all
+    current_user.bokbulboks.destroy_all
+
+    head :no_content
+  end
+
   private
 
   def user_creds
