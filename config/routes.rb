@@ -3,6 +3,9 @@
 Rails.application.routes.draw do
   # RESTful routes
   resources :bokbulboks, except: %i[new edit]
+
+  get '/random' => 'bokbulboks#random'
+
   resources :locations, except: %i[new edit]
 
   # Custom routes

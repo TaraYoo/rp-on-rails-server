@@ -42,14 +42,25 @@ class BokbulboksController < ProtectedController
     head :no_content
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bokbulbok
-      @bokbulbok = current_user.bokbulboks.find(params[:id])
-    end
+  # custom GET /random, get random bokbulbok set used as true
+  def random
+    @bokbulbok_ids = current_user.bokbulboks.ids
+    @bokbulbok_chosen_id = @bokbulbok_ids.sample
+    @bokbulbok_chosen = current_user.bokbulboks.find(@bokbulbok_chosen_id)
+    @bokbulbok_chosen.used = true
 
-    # Only allow a trusted parameter "white list" through.
-    def bokbulbok_params
-      params.require(:bokbulbok).permit(:description, :used)
-    end
+    render json: @bokbulbok_chosen
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_bokbulbok
+    @bokbulbok = current_user.bokbulboks.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def bokbulbok_params
+    params.require(:bokbulbok).permit(:description, :used)
+  end
 end
