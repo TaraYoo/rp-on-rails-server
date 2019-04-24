@@ -8,6 +8,22 @@ class UsersController < ProtectedController
     user = User.create(user_creds)
     if user.valid?
       render json: user, status: :created
+
+      @example_locations = user.locations.build(
+        name: 'Example: Baji\'s Hollow',
+        plot: 'Example: Defeat a dwarf cult',
+        visited: 'No (have players been here?)',
+        has_players: 'No (are players here now?)'
+      )
+
+      @example_locations.save
+
+      @example_bokbulboks = user.bokbulboks.build(
+        description: 'Example: Get the deck of many things',
+        used: false
+      )
+
+      @example_bokbulboks.save
     else
       render json: user.errors, status: :bad_request
     end
@@ -52,6 +68,26 @@ class UsersController < ProtectedController
 
     head :no_content
   end
+
+  def demosignin
+
+    @demo_example_location = current_user.locations.build(
+      name: 'Example: Baji\'s Hollow',
+      plot: 'Example: Defeat a dwarf cult',
+      visited: 'No (have players been here?)',
+      has_players: 'No (are players here now?)'
+    )
+    @demo_example_bokbulbok = current_user.bokbulboks.build(
+      description: 'Example: Get the deck of many things',
+      used: false
+    )
+
+    @demo_example_location.save
+    @demo_example_bokbulbok.save
+
+    head :no_content
+  end
+
 
   private
 

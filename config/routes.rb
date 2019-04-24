@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   delete '/sign-out' => 'users#signout'
   patch '/change-password' => 'users#changepw'
   delete '/demo-sign-out' => 'users#demosignout'
+  post '/demo-sign-in' => 'users#demosignin'
 end
